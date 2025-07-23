@@ -1,56 +1,60 @@
-# Web Crawler to Markdown
+# 웹 크롤러 (마크다운 변환)
 
-This Python script is an asynchronous web crawler that fetches content from a specified URL, converts it into markdown format, and saves it to a local directory. It's designed to crawl an entire domain by following internal links and storing the content as readable markdown files.
+이 Python 스크립트는 지정된 URL에서 콘텐츠를 가져와 마크다운 형식으로 변환하고 로컬 디렉토리에 저장하는 비동기 웹 크롤러입니다. 내부 링크를 따라 전체 도메인을 크롤링하고 콘텐츠를 읽기 쉬운 마크다운 파일로 저장하도록 설계되었습니다.
 
-## Features
+## 주요 기능
 
-- **Asynchronous Crawling:** Utilizes `asyncio` and `crawl4ai` for efficient, non-blocking web requests.
-- **Markdown Conversion:** Automatically converts fetched web page content into clean markdown.
-- **Structured Output:** Saves markdown files with a naming convention derived from the URL, ensuring organized storage.
-- **Domain-Specific Traversal:** Follows internal links within the same domain to crawl an entire website section.
-- **Error Handling:** Includes basic error handling for network requests and file operations.
+*   **비동기 크롤링:** `asyncio` 및 `crawl4ai`를 활용하여 효율적이고 논블로킹 방식의 웹 요청을 처리합니다.
+*   **마크다운 변환:** 가져온 웹 페이지 콘텐츠를 자동으로 깔끔한 마크다운으로 변환합니다.
+*   **구조화된 출력:** URL에서 파생된 명명 규칙으로 마크다운 파일을 저장하여 체계적인 저장을 보장합니다.
+*   **도메인별 탐색:** 동일한 도메인 내의 내부 링크를 따라 웹사이트의 전체 섹션을 크롤링합니다.
+*   **오류 처리:** 네트워크 요청 및 파일 작업에 대한 기본적인 오류 처리를 포함합니다.
 
-## Requirements
+## 요구 사항
 
-- Python 3.7+
-- `crawl4ai` library
+*   Python 3.7+
+*   `crawl4ai` 라이브러리
 
-## Installation
+## 설치
 
-1. **Clone the repository (if applicable) or download the `main.py` file.**
-2. **Install the required library:**
+1.  **저장소를 클론하거나 (해당하는 경우) `main.py` 파일을 다운로드합니다.**
+2.  **필요한 라이브러리를 설치합니다:**
 
-   ```bash
-   pip install crawl4ai
-   ```
+    ```bash
+    pip install crawl4ai
+    ```
 
-## Usage
+## 사용법
 
-1. **Open `main.py`** in your preferred text editor.
-2. **Modify `start_url`:** Change the `start_url` variable to the URL you wish to start crawling from.
+1.  선호하는 텍스트 편집기에서 **`main.py`를 엽니다.**
+2.  **`start_url` 수정:** 크롤링을 시작할 URL로 `start_url` 변수를 변경합니다.
 
-   ```python
-   start_url = "https://github.com/supabase/supabase-py" # Change this to your desired URL
-   ```
+    ```python
+    start_url = "https://github.com/supabase/supabase-py" # 원하는 URL로 변경하세요.
+    ```
 
-3. **Modify `output_dir` (optional):** Change the `output_dir` variable to specify where the markdown files should be saved. By default, it's `output_markdowns`.
+3.  **`output_dir` 수정 (선택 사항):** 마크다운 파일을 저장할 위치를 지정하려면 `output_dir` 변수를 변경합니다. 기본값은 `output_markdowns`입니다.
 
-   ```python
-   output_dir = "output_markdowns" # Change this if you want a different output directory
-   ```
+    ```python
+    output_dir = "output_markdowns" # 다른 출력 디렉토리를 원하면 변경하세요.
+    ```
 
-4. **Run the script:**
+4.  **스크립트 실행:**
 
-   ```bash
-   python main.py
-   ```
+    ```bash
+    python main.py
+    ```
 
-The script will start crawling the specified URL and save the converted markdown files into the `output_markdowns` directory (or your specified directory).
+스크립트는 지정된 URL 크롤링을 시작하고 변환된 마크다운 파일을 `output_markdowns` 디렉토리 (또는 지정한 디렉토리)에 저장합니다.
 
-## Output Structure
+## 하위 페이지 크롤링
 
-All generated markdown files will be saved in the `output_markdowns/` directory (or the directory you specified). The file names are constructed from the domain and path of the crawled URL, ensuring uniqueness and easy identification.
+이 스크립트는 `start_url`로 시작하여 해당 페이지에서 발견된 모든 링크를 추출합니다. 추출된 링크가 시작 URL과 **동일한 도메인**에 속하는 경우, 해당 링크를 방문해야 할 URL 목록에 추가하고 계속해서 크롤링합니다. 따라서 지정된 시작 URL의 도메인 내에 있는 모든 하위 페이지와 링크된 페이지를 추적하여 마크다운으로 저장할 수 있습니다.
 
-Example:
+## 출력 구조
+
+생성된 모든 마크다운 파일은 `output_markdowns/` 디렉토리 (또는 지정한 디렉토리)에 저장됩니다. 파일 이름은 크롤링된 URL의 도메인과 경로를 기반으로 구성되어 고유성과 쉬운 식별을 보장합니다.
+
+예시:
 `output_markdowns/github.com_supabase_supabase-py.md`
 `output_markdowns/flet.dev_docs_.md`
